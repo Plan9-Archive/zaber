@@ -1,0 +1,13 @@
+<../../mkconfig
+
+TARG=\
+	
+SYSMODULES=\
+	arg.m\
+	draw.m\
+	sys.m\
+
+DISBIN=$ROOT/dis/wm
+
+<$ROOT/mkfiles/mkdis
+

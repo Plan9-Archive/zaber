@@ -1,0 +1,8 @@
+<../mkconfig
+
+MAN=\
+	1/zaber\
+	2/zaber\
+
+<mkman
+
