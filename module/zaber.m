@@ -56,6 +56,7 @@ Zaber : module
 		com:		int;
 		data:		array of byte;
 
+		new:		fn(d, c: int, b: array of byte): ref Instruction;
 		bytes:	fn(inst: self ref Instruction): array of byte;
 	};
 	
@@ -76,5 +77,6 @@ Zaber : module
 		write:	fn(c: self ref Connection, i: ref Instruction): int;
 	};
 
+	init:		fn();
 	open:	fn(path: string): ref Connection;
 };

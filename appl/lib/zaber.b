@@ -40,6 +40,11 @@ open(path: string): ref Connection
 }
 
 
+Instruction.new(d, c: int, b: array of byte): ref Instruction
+{
+	return ref Instruction(d, c, b);
+}
+
 Instruction.bytes(inst: self ref Instruction): array of byte
 {
 	b := array[6] of byte;
