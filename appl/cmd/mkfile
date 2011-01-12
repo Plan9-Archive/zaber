@@ -1,9 +1,9 @@
 <../../mkconfig
 
 DIRS=\
-
+	
 TARG=\
-
+	
 SYSMODULES=\
 	arg.m\
 	draw.m\
@@ -12,4 +12,3 @@ SYSMODULES=\
 DISBIN=$ROOT/dis
 
 <$ROOT/mkfiles/mkdis
-

@@ -6,4 +6,3 @@ DIRS=\
 	man\
 
 <$ROOT/mkfiles/mksubdirs
-

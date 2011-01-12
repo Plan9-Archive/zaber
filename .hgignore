@@ -6,7 +6,7 @@
 \.sbl$
 \.tiff$
 \.png$
-xcode/build/*$
+xcode/*$
 
 syntax: glob
 *.pbproj/*.pbxuser
