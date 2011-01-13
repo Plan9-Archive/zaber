@@ -1,0 +1,39 @@
+# 
+# Command set for Zaber firmware 5xx
+# 
+ 
+000 reset
+001 home
+002 renumber
+008 move tracking
+009 limit active
+010 manual move tracking
+016 store current position
+017 return stored position
+018 move to stored position
+020 move absolute
+021 move relative
+022 move at constant speed
+023 stop
+035 read/write memory
+036 restore settings
+037 set microstep resolution
+038 set running current
+039 set hold current
+040 set device mode
+042 set target speed
+043 set acceleration
+044 set maximum range
+045 set current position
+046 set maximum relative move
+047 set home offset
+048 set alias number
+049 set lock state
+050 return device id
+051 return firmware version
+052 return power supply voltage
+053 return setting
+054 return status
+055 echo data
+060 return current position
+255 error

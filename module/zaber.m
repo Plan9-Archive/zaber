@@ -53,30 +53,38 @@ Zaber : module
 	Instruction: adt
 	{
 		id:		int;
-		com:		int;
-		data:		array of byte;
+		com:	int;
+		data:	array of byte;
 
-		new:		fn(d, c: int, b: array of byte): ref Instruction;
+		new:	fn(d, c: int, b: array of byte): ref Instruction;
 		bytes:	fn(inst: self ref Instruction): array of byte;
 	};
 	
 	Device: adt
 	{
 		id:		int;
-		conn:	ref Connection;
+		port:	ref Port;
 
 		write:	fn(d: self ref Device, c: int, data: array of byte): int;
 	};
 	
-	Connection: adt
+	Port: adt
 	{
-		path:	string;
-		rfd:	ref Sys->FD;
-		wfd:	ref Sys->FD;
+		lock:	ref Lock->Semaphore;
+		local:	string;
+		ctl:	ref Sys->FD;
+		data:	ref Sys->FD;
 
-		write:	fn(c: self ref Connection, i: ref Instruction): int;
+		# input reader
+		avail:	array of byte;
+		pid:	int;
+		
+		write:	fn(c: self ref Port, i: ref Instruction): int;
 	};
 
 	init:		fn();
-	open:	fn(path: string): ref Connection;
+	open:		fn(path: string): ref Port;
+	close:		fn(p: ref Port): ref Sys->Connection;
+	getreply:	fn(p: ref Port, n: int): array of ref Instruction;
+	send:		fn(p: ref Port, i: ref Instruction): int;
 };
