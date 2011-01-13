@@ -13,10 +13,64 @@ str: String;
 lock: Lock;
 	Semaphore: import lock;
 
+Cmds: adt {
+	code: int;
+	text: string;
+};
+
+# version 5.xx commands
+cmds: array of Cmds = array[] of {
+	(0, "Reset"),
+	(1, "Home"),
+	(2, "Renumber"),
+	(8, "Move tracking"),
+	(9, "Limit active"),
+	(10, "Manual move tracking"),
+	(16, "Store current position"),
+	(17, "Return stored position"),
+	(18, "Move to stored position"),
+	(20, "Move absolute"),
+	(21, "Move relative"),
+	(22, "Move at constant speed"),
+	(23, "Stop"),
+	(35, "Read/write memory"),
+	(36, "Restore settings"),
+	(37, "Set microstep resolution"),
+	(38, "Set running current"),
+	(39, "Set hold current"),
+	(40, "Set device mode"),
+	(42, "Set target speed"),
+	(43, "Set acceleration"),
+	(44, "Set maximum range"),
+	(45, "Set current position"),
+	(46, "Set maximum relative move"),
+	(47, "Set home offset"),
+	(48, "Set alias number"),
+	(49, "Set lock state"),
+	(50, "Return device id"),
+	(51, "Return firmware version"),
+	(52, "Return power supply voltage"),
+	(53, "Return setting"),
+	(54, "Return status"),
+	(55, "Echo data"),
+	(60, "Return current position"),
+	(255, "Error"),
+};
+
 
 Instruction.new(d, c: int, b: array of byte): ref Instruction
 {
-	return ref Instruction(d, c, b);
+	ni : ref Instruction;
+	valid := 0;
+	for(i:=0; i< len cmds; i++) {
+		if(cmds[i].code == c) {
+			valid = 1;
+			break;
+		}
+	}
+	if(valid && len b == 4)
+		ni = ref Instruction(d, c, b);
+	return ni;
 }
 
 Instruction.bytes(inst: self ref Instruction): array of byte

@@ -8,27 +8,27 @@ Zaber : module
 
 	Creset,
 	Chome,
-	Crenumber:	con iota;
+	Crenumber:			con iota;
 
 	Cmovetracking,
 	Climitactive,
-	Cmanualmove:	con (8+iota);
+	Cmanualmove:		con (8+iota);
 	
 	Cstorecurrentpos,
 	Cstoredposition,
 	Cmovetostoredpos:	con (16+iota);
 
-	Cmoveabsolute:	con 20;
-	Cmoverelative:	con 21;
-	Cmoveconstantspeed:	con 22;
-	Cstop:		con 23;
+	Cmoveabsolute,
+	Cmoverelative,
+	Cmoveconstantspeed,
+	Cstop:				con (20+iota);
 
 	Cmemory,
 	Crestore,
 	Csetresolution,
 	Csetrunningcurrent,
 	Csetholdcurrent,
-	Csetmode:	con (35+iota);
+	Csetmode:			con (35+iota);
 
 	Csettargetspeed,
 	Csetacceleration,
@@ -43,11 +43,11 @@ Zaber : module
 	Cpowersupplyv,
 	Csetting,
 	Cstatus,
-	Cecho:		con (42+iota);
+	Cecho:				con (42+iota);
 
-	Cposition:		con 60;
+	Cposition:			con 60;
 
-	Cerror:		con 255;
+	Cerror:				con 255;
 
 
 	Instruction: adt
