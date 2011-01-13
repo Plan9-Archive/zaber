@@ -3,6 +3,7 @@
 DIRS=\
 	
 TARG=\
+	testzaber.dis\
 	
 SYSMODULES=\
 	arg.m\
