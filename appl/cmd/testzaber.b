@@ -26,13 +26,13 @@ init(ctxt: ref Draw->Context, nil: list of string)
 	tls := zaber->open("/dev/eia0");
 	
 	Zeros := array[4] of { * => byte 0};
-#	RESET := array[6] of { * => byte 0};
-#	write(wfd, RESET);
-#	sys->sleep(200);
 
 	# firmware
 	i := zaber->Instruction.new(0, Zaber->Cversion, Zeros);
 	write(tls, i);
+	read(tls);
+	read(tls);
+	read(tls);
 	read(tls);
 
 	a := array of byte "hola";
@@ -44,6 +44,9 @@ init(ctxt: ref Draw->Context, nil: list of string)
 	i = zaber->Instruction.new(0, Zaber->Cdeviceid, Zeros);
 	write(tls, i);
 	read(tls);
+	read(tls);
+	read(tls);
+	read(tls);
 	
 	i = zaber->Instruction.new(2, Zaber->Cdeviceid, Zeros);
 	write(tls, i);
@@ -52,7 +55,10 @@ init(ctxt: ref Draw->Context, nil: list of string)
 	# home
 	i = zaber->Instruction.new(0, Zaber->Chome, Zeros);
 	write(tls, i);
-	sys->sleep(200);
+	sys->sleep(1000);
+	read(tls);
+	read(tls);
+	read(tls);
 	read(tls);
 
 	zaber->close(tls);
@@ -60,15 +66,9 @@ init(ctxt: ref Draw->Context, nil: list of string)
 
 read(p: ref Zaber->Port)
 {
-	t := 1;
-	while(t) {
-		sys->sleep(10);
-		a := zaber->getreply(p, 1);
-		if(a == nil || len a == 0)
-			t = 0;
-		else
-			sys->print("RX <- %s\n", dump(a[0].bytes()));
-	}
+	r := zaber->readreply(p, 10);
+	if(r != nil)
+		sys->print("RX <- %s\n", dump(r.bytes()));
 }
 
 write(c: ref Zaber->Port, i: ref Zaber->Instruction)

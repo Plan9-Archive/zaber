@@ -86,5 +86,6 @@ Zaber : module
 	open:		fn(path: string): ref Port;
 	close:		fn(p: ref Port): ref Sys->Connection;
 	getreply:	fn(p: ref Port, n: int): array of ref Instruction;
+	readreply:	fn(p: ref Port, ms: int): ref Instruction;
 	send:		fn(p: ref Port, i: ref Instruction): int;
 };

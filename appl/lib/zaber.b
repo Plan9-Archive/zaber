@@ -160,22 +160,40 @@ open(path: string): ref Port
 	newport.local = path;
 	newport.pid = 0;
 	
-	if(path != nil) {
-		if(str->in('!', path)) {
-			(ok, net) := sys->dial(path, nil);
-			if(ok == -1)
-				return nil;
+	openport(newport);
+	reading(newport);
+	
+	return newport;
+}
 
-			newport.ctl = sys->open(net.dir+"/ctl", Sys->ORDWR);
-			newport.data = sys->open(net.dir+"/data", Sys->ORDWR);
+# prepare device port
+openport(p: ref Port)
+{
+	if(p==nil) {
+		raise "fail: port not initialized";
+		return;
+	}
+	
+	p.data = nil;
+	p.ctl = nil;
+	
+	if(p.local != nil) {
+		if(str->in('!', p.local)) {
+			(ok, net) := sys->dial(p.local, nil);
+			if(ok == -1) {
+				raise "can't open "+p.local;
+				return;
+			}
+
+			p.ctl = sys->open(net.dir+"/ctl", Sys->ORDWR);
+			p.data = sys->open(net.dir+"/data", Sys->ORDWR);
 		} else {
-			newport.ctl = sys->open(path+"ctl", Sys->ORDWR);
-			newport.data = sys->open(path, Sys->ORDWR);
+			p.ctl = sys->open(p.local+"ctl", Sys->ORDWR);
+			p.data = sys->open(p.local, Sys->ORDWR);
 		}
 	}
 	
-	reading(newport);
-	return newport;
+	p.avail = nil;
 }
 
 # shut down reader (if any)
@@ -224,6 +242,29 @@ getreply(p: ref Port, n: int): array of ref Instruction
 	return a;
 }
 
+# read until timeout or result is returned
+readreply(p: ref Port, ms: int): ref Instruction
+{
+	if(p == nil)
+		return nil;
+	
+	limit := 10000;			# arbitrary maximum of 10s
+	r : ref Instruction;
+	for(start := sys->millisec(); sys->millisec() <= start+ms;) {
+		a := getreply(p, 1);
+		if(len a == 0) {
+			if(limit--) {
+				sys->sleep(1);
+				continue;
+			}
+			break;
+		}
+		return a[0];
+	}
+	
+	return r;
+}
+
 send(p: ref Port, i: ref Instruction): int
 {
 	if(p == nil || i == nil || p.data == nil)
@@ -246,16 +287,22 @@ reader(p: ref Port, pidc: chan of int)
 {
 	pidc <-= sys->pctl(0, nil);
 	
-	buf := array[6] of byte;
-	while((n := sys->read(p.data, buf, len buf)) > 0) {
-		p.lock.obtain();
-		if(len p.avail < Sys->ATOMICIO) {
-			na := array[len p.avail + n] of byte;
-			na[0:] = p.avail[0:];
-			na[len p.avail:] = buf[0:n];
-			p.avail = na;
+	buf := array[1] of byte;
+	for(;;) {
+		while((n := sys->read(p.data, buf, len buf)) > 0) {
+			p.lock.obtain();
+			if(len p.avail < Sys->ATOMICIO) {
+				na := array[len p.avail + n] of byte;
+				na[0:] = p.avail[0:];
+				na[len p.avail:] = buf[0:n];
+				p.avail = na;
+			}
+			p.lock.release();
 		}
-		p.lock.release();
+		# error, try again
+		p.data = nil;
+		p.ctl = nil;
+		openport(p);
 	}
 }
 
