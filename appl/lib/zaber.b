@@ -57,6 +57,50 @@ cmds: array of Cmds = array[] of {
 	(255, "Error"),
 };
 
+Errors: adt {
+	code: int;
+	text: string;
+};
+
+errors: array of Errors = array[] of {
+	(1, "Cannot Home"),
+	(2, "Device Number Invalid"),
+	(14, "Voltage Low"),
+	(15, "Voltage High"),
+	(18, "Stored Position Invalid"),
+	(20, "Absolute Position Invalid"),
+	(21, "Relative Position Invalid"),
+	(22, "Velocity Invalid"),
+	(36, "Peripheral Id Invalid"),
+	(37, "Resolution Invalid"),
+	(38, "Run Current Invalid"),
+	(39, "Hold Current Invalid"),
+	(40, "Mode Invalid"),
+	(41, "Home Speed Invalid"),
+	(42, "Speed Invalid"),
+	(43, "Acceleration Invalid"),
+	(44, "Maximum Range Invalid"),
+	(45, "Current Position Invalid"),
+	(46, "Maximum Relative Move Invalid"),
+	(47, "Offset Invalid"),
+	(48, "Alias Invalid"),
+	(49, "Lock State Invalid"),
+	(50, "Device Id Unknown"),
+	(53, "Setting Invalid"),
+	(64, "Command Invalid"),
+	(255, "Busy"),
+	(1600, "Save Position Invalid"),
+	(1601, "Save Position Not Homed"),
+	(1700, "Return Position Invalid"),
+	(1800, "Move Position Invalid"),
+	(1801, "Move Position Not Homed"),
+	(2146, "Relative Position Limited"),
+	(3600, "Settings Locked"),
+	(4008, "Disable Auto Home Invalid"),
+	(4010, "Bit 10 Invalid"),
+	(4012, "Home Switch Invalid"),
+	(4013, "Bit 13 Invalid"),
+};
 
 Instruction.new(d, c: int, b: array of byte): ref Instruction
 {

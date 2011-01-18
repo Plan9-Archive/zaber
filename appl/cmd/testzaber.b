@@ -35,7 +35,8 @@ init(ctxt: ref Draw->Context, nil: list of string)
 	write(tls, i);
 	read(tls);
 
-	i = zaber->Instruction.new(1, Zaber->Cecho, array[4] of { byte "hola" });
+	a := array of byte "hola";
+	i = zaber->Instruction.new(1, Zaber->Cecho, a);
 	write(tls, i);
 	read(tls);
 	
@@ -82,6 +83,6 @@ dump(b: array of byte): string
 	s := "";
 	for(i:=0; i<len b; i++)
 		s = sys->sprint("%s %d", s, int(b[i]));
-	s = sys->sprint("%s %s", s, string(b[2:6]));
+	s = sys->sprint("%s %s", s, string(b[2:]));
 	return s;
 }
