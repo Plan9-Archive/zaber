@@ -1,0 +1,254 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXFileReference section */
+		412DEF6C12E4D48800BAA2CD /* testzaber.b */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.limbo; path = testzaber.b; sourceTree = "<group>"; };
+		413571A312DCAD8600C07D1B /* mkfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = mkfile; sourceTree = "<group>"; };
+		413571A512DCAD8600C07D1B /* mkfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = mkfile; sourceTree = "<group>"; };
+		413571A612DCAD8600C07D1B /* mkfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = mkfile; sourceTree = "<group>"; };
+		413571A812DCAD8600C07D1B /* mkfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = mkfile; sourceTree = "<group>"; };
+		413571AA12DCAD8600C07D1B /* commands */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = commands; sourceTree = "<group>"; };
+		413571AD12DCAD8600C07D1B /* zaber */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = zaber; sourceTree = "<group>"; };
+		413571AF12DCAD8600C07D1B /* zaber */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = zaber; sourceTree = "<group>"; };
+		413571B012DCAD8600C07D1B /* mkfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = mkfile; sourceTree = "<group>"; };
+		413571B112DCAD8600C07D1B /* mkman */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = mkman; sourceTree = "<group>"; };
+		413571B212DCAD8600C07D1B /* mkconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = mkconfig; path = ../mkconfig; sourceTree = "<group>"; };
+		413571B312DCAD8600C07D1B /* mkfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = mkfile; path = ../mkfile; sourceTree = "<group>"; };
+		413571B512DCAD8600C07D1B /* mkfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = mkfile; sourceTree = "<group>"; };
+		413571B612DCAD8600C07D1B /* mkmod */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = mkmod; sourceTree = "<group>"; };
+		413571B712DCAD8600C07D1B /* zaber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.limbo; path = zaber.m; sourceTree = "<group>"; };
+		413571B812DCAD8600C07D1B /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = README.txt; path = ../README.txt; sourceTree = "<group>"; };
+		4151EA3612E7677800881944 /* console.b */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.limbo; path = console.b; sourceTree = "<group>"; };
+		4189752112DCDF4800CE3154 /* zaber.b */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.limbo; path = zaber.b; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		4135718A12DCAC1F00C07D1B = {
+			isa = PBXGroup;
+			children = (
+				413571A112DCAD8500C07D1B /* appl */,
+				413571A912DCAD8600C07D1B /* lib */,
+				413571AB12DCAD8600C07D1B /* man */,
+				413571B212DCAD8600C07D1B /* mkconfig */,
+				413571B312DCAD8600C07D1B /* mkfile */,
+				413571B412DCAD8600C07D1B /* module */,
+				413571B812DCAD8600C07D1B /* README.txt */,
+			);
+			sourceTree = "<group>";
+		};
+		413571A112DCAD8500C07D1B /* appl */ = {
+			isa = PBXGroup;
+			children = (
+				413571A212DCAD8500C07D1B /* cmd */,
+				413571A412DCAD8600C07D1B /* lib */,
+				413571A612DCAD8600C07D1B /* mkfile */,
+				413571A712DCAD8600C07D1B /* wm */,
+			);
+			name = appl;
+			path = ../appl;
+			sourceTree = "<group>";
+		};
+		413571A212DCAD8500C07D1B /* cmd */ = {
+			isa = PBXGroup;
+			children = (
+				4151EA3612E7677800881944 /* console.b */,
+				413571A312DCAD8600C07D1B /* mkfile */,
+				412DEF6C12E4D48800BAA2CD /* testzaber.b */,
+			);
+			path = cmd;
+			sourceTree = "<group>";
+		};
+		413571A412DCAD8600C07D1B /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				4189752112DCDF4800CE3154 /* zaber.b */,
+				413571A512DCAD8600C07D1B /* mkfile */,
+			);
+			path = lib;
+			sourceTree = "<group>";
+		};
+		413571A712DCAD8600C07D1B /* wm */ = {
+			isa = PBXGroup;
+			children = (
+				413571A812DCAD8600C07D1B /* mkfile */,
+			);
+			path = wm;
+			sourceTree = "<group>";
+		};
+		413571A912DCAD8600C07D1B /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				413571AA12DCAD8600C07D1B /* commands */,
+			);
+			name = lib;
+			path = ../lib;
+			sourceTree = "<group>";
+		};
+		413571AB12DCAD8600C07D1B /* man */ = {
+			isa = PBXGroup;
+			children = (
+				413571AC12DCAD8600C07D1B /* 1 */,
+				413571AE12DCAD8600C07D1B /* 2 */,
+				413571B012DCAD8600C07D1B /* mkfile */,
+				413571B112DCAD8600C07D1B /* mkman */,
+			);
+			name = man;
+			path = ../man;
+			sourceTree = "<group>";
+		};
+		413571AC12DCAD8600C07D1B /* 1 */ = {
+			isa = PBXGroup;
+			children = (
+				413571AD12DCAD8600C07D1B /* zaber */,
+			);
+			path = 1;
+			sourceTree = "<group>";
+		};
+		413571AE12DCAD8600C07D1B /* 2 */ = {
+			isa = PBXGroup;
+			children = (
+				413571AF12DCAD8600C07D1B /* zaber */,
+			);
+			path = 2;
+			sourceTree = "<group>";
+		};
+		413571B412DCAD8600C07D1B /* module */ = {
+			isa = PBXGroup;
+			children = (
+				413571B512DCAD8600C07D1B /* mkfile */,
+				413571B612DCAD8600C07D1B /* mkmod */,
+				413571B712DCAD8600C07D1B /* zaber.m */,
+			);
+			name = module;
+			path = ../module;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXLegacyTarget section */
+		4135719112DCAC1F00C07D1B /* zaber */ = {
+			isa = PBXLegacyTarget;
+			buildArgumentsString = "$(ACTION)";
+			buildConfigurationList = 4135719412DCAC1F00C07D1B /* Build configuration list for PBXLegacyTarget "zaber" */;
+			buildPhases = (
+			);
+			buildToolPath = /usr/local/plan9/bin/mk;
+			buildWorkingDirectory = ..;
+			dependencies = (
+			);
+			name = zaber;
+			passBuildSettingsInEnvironment = 1;
+			productName = zaber;
+		};
+/* End PBXLegacyTarget section */
+
+/* Begin PBXProject section */
+		4135718C12DCAC1F00C07D1B /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 4135718F12DCAC1F00C07D1B /* Build configuration list for PBXProject "zaber" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 4135718A12DCAC1F00C07D1B;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				4135719112DCAC1F00C07D1B /* zaber */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin XCBuildConfiguration section */
+		4135719212DCAC1F00C07D1B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		4135719312DCAC1F00C07D1B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		4135719512DCAC1F00C07D1B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUGGING_SYMBOLS = YES;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				ROOT = /usr/inferno;
+			};
+			name = Debug;
+		};
+		4135719612DCAC1F00C07D1B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				ROOT = /usr/inferno;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		4135718F12DCAC1F00C07D1B /* Build configuration list for PBXProject "zaber" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4135719212DCAC1F00C07D1B /* Debug */,
+				4135719312DCAC1F00C07D1B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4135719412DCAC1F00C07D1B /* Build configuration list for PBXLegacyTarget "zaber" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4135719512DCAC1F00C07D1B /* Debug */,
+				4135719612DCAC1F00C07D1B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 4135718C12DCAC1F00C07D1B /* Project object */;
+}

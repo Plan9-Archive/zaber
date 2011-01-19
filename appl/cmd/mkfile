@@ -3,6 +3,7 @@
 DIRS=\
 	
 TARG=\
+	console.dis\
 	testzaber.dis\
 	
 SYSMODULES=\
@@ -10,6 +11,6 @@ SYSMODULES=\
 	draw.m\
 	sys.m\
 
-DISBIN=$ROOT/dis
+DISBIN=$ROOT/dis/zaber
 
 <$ROOT/mkfiles/mkdis
