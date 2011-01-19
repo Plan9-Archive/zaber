@@ -49,11 +49,15 @@ Zaber : module
 
 	Cerror:				con 255;
 
+	Code: adt {
+		code: int;
+		text: string;
+	};
 
 	Instruction: adt
 	{
 		id:		int;
-		com:	int;
+		cmd:	int;
 		data:	array of byte;
 
 		new:	fn(d, c: int, b: array of byte): ref Instruction;
@@ -70,7 +74,9 @@ Zaber : module
 	
 	Port: adt
 	{
-		lock:	ref Lock->Semaphore;
+		rdlock:	ref Lock->Semaphore;
+		wrlock:	ref Lock->Semaphore;
+		
 		local:	string;
 		ctl:	ref Sys->FD;
 		data:	ref Sys->FD;
@@ -88,4 +94,7 @@ Zaber : module
 	getreply:	fn(p: ref Port, n: int): array of ref Instruction;
 	readreply:	fn(p: ref Port, ms: int): ref Instruction;
 	send:		fn(p: ref Port, i: ref Instruction): int;
+	
+	b2i:		fn(b: array of byte): int;
+	i2b:		fn(i: int): array of byte;
 };

@@ -27,10 +27,23 @@ init(ctxt: ref Draw->Context, nil: list of string)
 	
 	Zeros := array[4] of { * => byte 0};
 
+	# b2i & i2b
+	b := zaber->i2b(-1);
+	sys->print("i2b: %d %s\n", -1, dump(b));
+	sys->print("b2i: %s %d\n", dump(b), zaber->b2i(b));
+	
+	b = zaber->i2b(32);
+	sys->print("i2b: %d %s\n", 32, dump(b));
+	sys->print("b2i: %s %d\n", dump(b), zaber->b2i(b));
+
+	b = zaber->i2b(-32);
+	sys->print("i2b: %d %s\n", -32, dump(b));
+	sys->print("b2i: %s %d\n", dump(b), zaber->b2i(b));
+
 	# firmware
 	i := zaber->Instruction.new(0, Zaber->Cversion, Zeros);
 	write(tls, i);
-	read(tls);
+	r = read(tls);
 	read(tls);
 	read(tls);
 	read(tls);
@@ -64,18 +77,18 @@ init(ctxt: ref Draw->Context, nil: list of string)
 	zaber->close(tls);
 }
 
-read(p: ref Zaber->Port)
+read(p: ref Zaber->Port): ref Zaber->Instruction
 {
 	r := zaber->readreply(p, 10);
 	if(r != nil)
 		sys->print("RX <- %s\n", dump(r.bytes()));
+	return r;
 }
 
-write(c: ref Zaber->Port, i: ref Zaber->Instruction)
+write(p: ref Zaber->Port, i: ref Zaber->Instruction)
 {
 	sys->print("TX -> %s\n", dump(i.bytes()));
-	c.write(i);
-	sys->sleep(10);
+	p.write(i);
 }
 
 dump(b: array of byte): string

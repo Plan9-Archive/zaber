@@ -13,13 +13,8 @@ str: String;
 lock: Lock;
 	Semaphore: import lock;
 
-Cmds: adt {
-	code: int;
-	text: string;
-};
-
 # version 5.xx commands
-cmds: array of Cmds = array[] of {
+cmds: array of Code = array[] of {
 	(0, "Reset"),
 	(1, "Home"),
 	(2, "Renumber"),
@@ -57,12 +52,7 @@ cmds: array of Cmds = array[] of {
 	(255, "Error"),
 };
 
-Errors: adt {
-	code: int;
-	text: string;
-};
-
-errors: array of Errors = array[] of {
+errors: array of Code = array[] of {
 	(1, "Cannot Home"),
 	(2, "Device Number Invalid"),
 	(14, "Voltage Low"),
@@ -102,6 +92,17 @@ errors: array of Errors = array[] of {
 	(4013, "Bit 13 Invalid"),
 };
 
+statuses: array of Code = array[] of {
+	(0, "Idle"),
+	(1, "Executing a home instruction"),
+	(10, "Executing a manual move"),
+	(20, "Executing a move absolute instruction"),
+	(21, "Executing a move relative instruction"),
+	(22, "Executing a move at constant speed instruction"),
+	(23, "Executing a stop instruction"),
+};
+
+
 Instruction.new(d, c: int, b: array of byte): ref Instruction
 {
 	ni : ref Instruction;
@@ -121,7 +122,7 @@ Instruction.bytes(inst: self ref Instruction): array of byte
 {
 	b := array[6] of byte;
 	b[0] = byte inst.id;
-	b[1] = byte inst.com;
+	b[1] = byte inst.cmd;
 	for(i := 0; i < len inst.data; i++)
 		b[2+i] = inst.data[i];
 	return b;
@@ -135,8 +136,16 @@ Device.write(d: self ref Device, c: int, data: array of byte): int
 
 Port.write(p: self ref Port, i: ref Instruction): int
 {
+	r := 0;
+	
 	b := i.bytes();
-	return sys->write(p.data, b, len b);
+	p.wrlock.obtain();
+	r = sys->write(p.data, b, len b);
+	if(i.cmd == Crenumber)
+		sys->sleep(500);
+	p.wrlock.release();
+
+	return r;
 }
 
 
@@ -156,7 +165,8 @@ open(path: string): ref Port
 	if(sys == nil) init();
 	
 	newport := ref Port;
-	newport.lock = Semaphore.new();
+	newport.rdlock = Semaphore.new();
+	newport.wrlock = Semaphore.new();
 	newport.local = path;
 	newport.pid = 0;
 	
@@ -220,14 +230,14 @@ getreply(p: ref Port, n: int): array of ref Instruction
 		return nil;
 
 	b : array of byte;
-	p.lock.obtain();
+	p.rdlock.obtain();
 	if(len p.avail != 0) {
 		if((n*6) > len p.avail)
 			n = len p.avail / 6;
 		b = p.avail[0:(n*6)];
 		p.avail = p.avail[(n*6):];
 	}
-	p.lock.release();
+	p.rdlock.release();
 
 	a : array of ref Instruction;
 	if(len b) {
@@ -235,7 +245,7 @@ getreply(p: ref Port, n: int): array of ref Instruction
 		for(j:=0; j<n; j++) {
 			i := a[j];
 			i.id = int(b[(j*6)]);
-			i.com = int(b[(j*6)+1]);
+			i.cmd = int(b[(j*6)+1]);
 			i.data = b[(j*6)+2:(j*6)+6];
 		}
 	}
@@ -248,7 +258,7 @@ readreply(p: ref Port, ms: int): ref Instruction
 	if(p == nil)
 		return nil;
 	
-	limit := 10000;			# arbitrary maximum of 10s
+	limit := 60000;			# arbitrary maximum of 60s
 	r : ref Instruction;
 	for(start := sys->millisec(); sys->millisec() <= start+ms;) {
 		a := getreply(p, 1);
@@ -290,20 +300,43 @@ reader(p: ref Port, pidc: chan of int)
 	buf := array[1] of byte;
 	for(;;) {
 		while((n := sys->read(p.data, buf, len buf)) > 0) {
-			p.lock.obtain();
+			p.rdlock.obtain();
 			if(len p.avail < Sys->ATOMICIO) {
 				na := array[len p.avail + n] of byte;
 				na[0:] = p.avail[0:];
 				na[len p.avail:] = buf[0:n];
 				p.avail = na;
 			}
-			p.lock.release();
+			p.rdlock.release();
 		}
 		# error, try again
 		p.data = nil;
 		p.ctl = nil;
 		openport(p);
 	}
+}
+
+# support fn
+b2i(b: array of byte): int
+{
+	i := 0;
+	if(len b == 4) {
+		i = int(b[0])<<0;
+		i |= int(b[1])<<8;
+		i |= int(b[2])<<16;
+		i |= int(b[3])<<24;
+	}
+	return i;
+}
+
+i2b(i: int): array of byte
+{
+	b := array[4] of byte;
+	b[0] = byte(i>>0);
+	b[1] = byte(i>>8);
+	b[2] = byte(i>>16);
+	b[3] = byte(i>>24);
+	return b;
 }
 
 # convenience
