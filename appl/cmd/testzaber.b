@@ -43,15 +43,15 @@ init(ctxt: ref Draw->Context, nil: list of string)
 	# firmware
 	i := zaber->Instruction.new(0, Zaber->Cversion, Zeros);
 	write(tls, i);
+	r := read(tls);
 	r = read(tls);
-	read(tls);
-	read(tls);
-	read(tls);
+	r = read(tls);
+	r = read(tls);
 
 	a := array of byte "hola";
 	i = zaber->Instruction.new(1, Zaber->Cecho, a);
 	write(tls, i);
-	read(tls);
+	r = read(tls);
 	
 	# dev id
 	i = zaber->Instruction.new(0, Zaber->Cdeviceid, Zeros);
