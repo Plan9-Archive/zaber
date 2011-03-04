@@ -14,7 +14,7 @@ include "zaber.m";
 sys: Sys;
 	sprint: import sys;
 draw: Draw;
-	Image, Font, Rect, Display: import draw;
+	Image, Font, Point, Rect, Display: import draw;
 daytime: Daytime;
 str: String;
 tk: Tk;
@@ -44,12 +44,16 @@ wmctl: chan of string;
 
 tkcmds := array[] of {
 	"frame .f",
-	"canvas .c -bg white",
+	"canvas .c -bg black",
 	
 	"label .l.pos -width 128 -text {(0, 0)}",
 	"entry .e.x -width 60 -bg white",
 	"entry .e.y -width 60 -bg white",
 	
+	"bind .c <ButtonRelease-1> {send cmd 0 %x %y}",
+	"bind .c <ButtonRelease-2> {send cmd 0 %x %y}",
+	"bind .c <Button-1> {send cmd 1 %x %y}",
+	"bind .c <Button-2> {send cmd 2 %x %y}",
 	"bind .e.x <Key {send numbers {%A} .e.x}",
 	"bind .e.y <Key {send numbers {%A} .e.y}",
 	
@@ -104,8 +108,8 @@ window(ctxt: ref Draw->Context)
 	pid = sys->pctl(sys->NEWPGRP | Sys->FORKNS, nil);
 	(t, wmctl) = tkclient->toplevel(ctxt, "", "zaber console", Tkclient->Appl);
 	
-	tkcmdchan := chan of string;
-	tk->namechan(t, tkcmdchan, "cmd");
+	cmdch := chan of string;
+	tk->namechan(t, cmdch, "cmd");
 	for(i := 0; i < len tkcmds; i++)
 		tkcmd(tkcmds[i]);
 
@@ -120,8 +124,8 @@ window(ctxt: ref Draw->Context)
 	tkclient->onscreen(t, nil);
 	tkclient->startinput(t, "kbd"::"ptr"::nil);
 
-	c := zaber->Instruction.newwithval(0, Zaber->Cposition, 0);
-	p.write(c);
+	r := zaber->Instruction.newwithval(0, Zaber->Cposition, 0);
+	p.write(r);
 	
 	main: for(;;) alt {
 		s := <-t.ctxt.kbd =>
@@ -135,12 +139,24 @@ window(ctxt: ref Draw->Context)
 			if(menu == "exit")
 				quit();
 			tkclient->wmctl(t, menu);
+		
+		c := <-cmdch =>
+			# sys->print("%s\n", c);
+			# max microstep: 131327
+			(nil, toks) := sys->tokenize(c, " ");
+			pnt := Point(int hd tl toks, int hd tl tl toks);
+			x1 := real pnt.x * 505.1038;
+			y1 := real pnt.y * 505.1038;
+			xd := zaber->Instruction.newwithval(1, Zaber->Cmoveabsolute, int(x1));
+			yd := zaber->Instruction.newwithval(2, Zaber->Cmoveabsolute, int(y1));
+			p.write(xd);
+			p.write(yd);
 
 		s := <-numbers =>
 			numericfield(s);
 		
 		j := <-tchan =>
-			r := zaber->readreply(p, 1);
+			r = zaber->readreply(p, 1);
 			if(r != nil)
 				processreply(r);
 	}
@@ -150,9 +166,9 @@ window(ctxt: ref Draw->Context)
 
 numericfield(s: string)
 {
+	v, val : int;
 	(c, e) := str->splitstrr(s, "} ");
 	char := c[1];
-	val := 0;
 	
 	case char {
 	'0' to '9' or '.' or '-' or 'e' or 'E' =>
@@ -178,7 +194,19 @@ numericfield(s: string)
 		return;
 	}
 	
-	sval := tkcmd(e+" get");
+	sval := int tkcmd(e+" get");
+	tkcmd(e+" delete 0 end");
+	tkcmd(sprint("%s insert insert {%d}", e, sval+val));
+	v = sval + val;
+	r : ref Instruction;
+	case e {
+	".e.x" =>
+		r = zaber->Instruction.newwithval(1, Zaber->Cmoveabsolute, v);
+	".e.y" =>
+		r = zaber->Instruction.newwithval(2, Zaber->Cmoveabsolute, v);
+	}
+	if(r != nil)
+		p.write(r);
 }
 
 processreply(r: ref Zaber->Instruction)
@@ -187,15 +215,25 @@ processreply(r: ref Zaber->Instruction)
 		sys->print("RX <-\n%s\n", r.dump());
 	
 	case r.cmd {
-	8 or 9 or 10 or 60 =>
+	Zaber->Chome or
+	Zaber->Cmovetracking or
+	Zaber->Climitactive or
+	Zaber->Cmanualmove or
+	Zaber->Cstoredposition or
+	Zaber->Cmovetostoredpos or
+	Zaber->Cmoveabsolute or
+	Zaber->Cmoverelative or
+	Zaber->Cstop or
+	Zaber->Csetcurrentposition or
+	Zaber->Cposition =>
 		v := r.value();
 		if(r.id == 1)
 			x = v;
 		if(r.id == 2)
 			y = v;
 		tkcmd(sprint(".l.pos configure -text {(%d, %d)}", x, y));
-	255 =>
-		sys->print("Error: %s\n", r.dump());
+	* =>
+		sys->print("%s\n", r.dump());
 	}
 	
 	tkcmd("update");
