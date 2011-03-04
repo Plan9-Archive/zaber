@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXFileReference section */
+		41109DA7131F118200735641 /* console.b */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.limbo; path = console.b; sourceTree = "<group>"; };
 		412DEF6C12E4D48800BAA2CD /* testzaber.b */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.limbo; path = testzaber.b; sourceTree = "<group>"; };
 		413571A312DCAD8600C07D1B /* mkfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = mkfile; sourceTree = "<group>"; };
 		413571A512DCAD8600C07D1B /* mkfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = mkfile; sourceTree = "<group>"; };
@@ -23,7 +24,6 @@
 		413571B612DCAD8600C07D1B /* mkmod */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = mkmod; sourceTree = "<group>"; };
 		413571B712DCAD8600C07D1B /* zaber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.limbo; path = zaber.m; sourceTree = "<group>"; };
 		413571B812DCAD8600C07D1B /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = README.txt; path = ../README.txt; sourceTree = "<group>"; };
-		4151EA3612E7677800881944 /* console.b */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.limbo; path = console.b; sourceTree = "<group>"; };
 		4189752112DCDF4800CE3154 /* zaber.b */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.limbo; path = zaber.b; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -56,7 +56,6 @@
 		413571A212DCAD8500C07D1B /* cmd */ = {
 			isa = PBXGroup;
 			children = (
-				4151EA3612E7677800881944 /* console.b */,
 				413571A312DCAD8600C07D1B /* mkfile */,
 				412DEF6C12E4D48800BAA2CD /* testzaber.b */,
 			);
@@ -75,6 +74,7 @@
 		413571A712DCAD8600C07D1B /* wm */ = {
 			isa = PBXGroup;
 			children = (
+				41109DA7131F118200735641 /* console.b */,
 				413571A812DCAD8600C07D1B /* mkfile */,
 			);
 			path = wm;

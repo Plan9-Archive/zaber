@@ -16,7 +16,7 @@ TestZaber: module {
 	init: fn(ctxt: ref Draw->Context, argv: list of string);
 };
 
-init(ctxt: ref Draw->Context, nil: list of string)
+init(nil: ref Draw->Context, nil: list of string)
 {
 	sys = load Sys Sys->PATH;
 	

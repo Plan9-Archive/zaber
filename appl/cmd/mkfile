@@ -3,7 +3,6 @@
 DIRS=\
 	
 TARG=\
-	console.dis\
 	testzaber.dis\
 	
 SYSMODULES=\

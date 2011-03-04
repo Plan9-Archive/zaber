@@ -1,13 +1,13 @@
 <../../mkconfig
 
 TARG=\
-	
+	console.dis\
+
 SYSMODULES=\
 	arg.m\
 	draw.m\
 	sys.m\
 
-DISBIN=$ROOT/dis/wm
+DISBIN=$ROOT/dis/zaber
 
 <$ROOT/mkfiles/mkdis
-

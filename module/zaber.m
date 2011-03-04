@@ -61,7 +61,11 @@ Zaber : module
 		data:	array of byte;
 
 		new:	fn(d, c: int, b: array of byte): ref Instruction;
+		newwithval:	fn(d, c, v: int): ref Instruction;
 		bytes:	fn(inst: self ref Instruction): array of byte;
+		value:	fn(inst: self ref Instruction): int;
+		valuebytes:	fn(v: int): array of byte;
+		dump:	fn(inst: self ref Instruction): string;
 	};
 	
 	Device: adt
@@ -97,4 +101,6 @@ Zaber : module
 	
 	b2i:		fn(b: array of byte): int;
 	i2b:		fn(i: int): array of byte;
+	
+	codetext:	fn(c: array of Code, id: int): string;
 };

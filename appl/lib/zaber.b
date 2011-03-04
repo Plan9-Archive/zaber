@@ -118,6 +118,24 @@ Instruction.new(d, c: int, b: array of byte): ref Instruction
 	return ni;
 }
 
+Instruction.newwithval(d, c, v: int): ref Instruction
+{
+	ni: ref Instruction;
+	valid := 0;
+	for(i:=0; i< len cmds; i++) {
+		if(cmds[i].code == c) {
+			valid = 1;
+			break;
+		}
+	}
+	if(valid) {
+		b := Instruction.valuebytes(v);
+		ni = ref Instruction(d, c, b);
+	}
+	
+	return ni;
+}
+
 Instruction.bytes(inst: self ref Instruction): array of byte
 {
 	b := array[6] of byte;
@@ -126,6 +144,41 @@ Instruction.bytes(inst: self ref Instruction): array of byte
 	for(i := 0; i < len inst.data; i++)
 		b[2+i] = inst.data[i];
 	return b;
+}
+
+Instruction.value(inst: self ref Instruction): int
+{
+	if(len inst.data != 4)
+		return -1;
+	d := inst.data;
+	v := 256**3 * int(d[3]) + 256**2 * int(d[2]) + 256 * int(d[1]) + int(d[0]);
+	if(int(d[3]) > 127)
+		v = v - 256**4;
+	return v;
+}
+
+Instruction.valuebytes(v: int): array of byte
+{
+	b := array[4] of byte;
+	if(v < 0)
+		v = 256**4 + v;
+	b[3] = byte(v / 256**3);
+	v = v - 256**3 * int(b[3]);
+	b[2] = byte(v / 256**2);
+	v = v - 256**2 * int(b[2]);
+	b[1] = byte(v / 256);
+	v = v - 256;
+	b[0] = byte(v);
+	return b;
+}
+
+Instruction.dump(inst: self ref Instruction): string
+{
+	s := "";
+	s = s + sys->sprint("(id \"%d\")\n", inst.id);
+	s = s + sys->sprint("(cmd (%d \"%s\"))\n", inst.cmd, codetext(cmds, inst.cmd));
+	s = s + sys->sprint("(data (\"%s\" %d))", hexdump(inst.data), inst.value());
+	return s;
 }
 
 Device.write(d: self ref Device, c: int, data: array of byte): int
@@ -339,7 +392,27 @@ i2b(i: int): array of byte
 	return b;
 }
 
+codetext(c: array of Code, id: int): string
+{
+	s := "";
+	for(i:=0; i< len c; i++) {
+		if(c[i].code == id) {
+			s = c[i].text;
+			break;
+		}
+	}
+	return s;
+}
+
 # convenience
+hexdump(data : array of byte): string
+{
+	s := "";
+	for (i := 0; i < len data; i++)
+		 s = s + sys->sprint(" %.2x", int data[i]);
+	return s;
+}
+
 kill(pid: int)
 {
 	fd := sys->open("#p/"+string pid+"/ctl", Sys->OWRITE);
