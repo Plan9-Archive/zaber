@@ -180,6 +180,8 @@ Instruction.dump(inst: self ref Instruction): string
 	s = s + sys->sprint("(data (\"%s\" %d))", hexdump(inst.data), inst.value());
 	if(inst.cmd == Cerror)
 		s = s + sys->sprint("\n(error (%d \"%s\"))", inst.value(), codetext(errors, inst.value()));
+	if(inst.cmd == Cstatus)
+		s = s + sys->sprint("\n(status (%d \"%s\"))", inst.value(), codetext(statuses, inst.value()));
 	return s;
 }
 
