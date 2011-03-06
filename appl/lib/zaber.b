@@ -221,16 +221,17 @@ open(path: string): ref Port
 {
 	if(sys == nil) init();
 	
-	newport := ref Port;
-	newport.rdlock = Semaphore.new();
-	newport.wrlock = Semaphore.new();
-	newport.local = path;
-	newport.pid = 0;
+	np := ref Port;
+	np.rdlock = Semaphore.new();
+	np.wrlock = Semaphore.new();
+	np.local = path;
+	np.pid = 0;
 	
-	openport(newport);
-	reading(newport);
+	openport(np);
+	if(np.ctl != nil)
+		reading(np);
 	
-	return newport;
+	return np;
 }
 
 # prepare device port
@@ -396,6 +397,7 @@ i2b(i: int): array of byte
 	return b;
 }
 
+# convenience
 codetext(c: array of Code, id: int): string
 {
 	s := "";
@@ -408,7 +410,6 @@ codetext(c: array of Code, id: int): string
 	return s;
 }
 
-# convenience
 hexdump(data : array of byte): string
 {
 	s := "";

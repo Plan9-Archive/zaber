@@ -101,6 +101,4 @@ Zaber : module
 	
 	b2i:		fn(b: array of byte): int;
 	i2b:		fn(i: int): array of byte;
-	
-	codetext:	fn(c: array of Code, id: int): string;
 };

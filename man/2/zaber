@@ -1,0 +1,52 @@
+.TH ZABER 2
+.SH NAME
+zaber \- Zaber linear stage manipulation
+.SH SYNOPSIS
+.EX
+include "zaber.m";
+zaber := load Zaber Zaber->PATH;
+zaber->init();
+p := zaber->open(path);
+
+init:	fn();
+open:	fn(path: string): ref Port;
+close:	fn(p: ref Port): ref Sys->Connection;
+getreply:	fn(p: ref Port, n: int): array of ref Instruction;
+readreply:	fn(p: ref Port, ms: int): ref Instruction;
+send:		fn(p: ref Port, i: ref Instruction): int;
+.SH DESCRIPTION
+.B Zaber
+provides a small set of functions to manipulate Zaber linear stages for use in
+applications.  The API provides all of the commands for Zaber devices running
+firmware version 5xx.
+.PP
+.B Init
+must be called before using any other function in the module.
+.PP
+.B Open
+takes a string path as either a file path or a network address and establishes
+a connection to the Zaber device chain.  On successful connection, a response
+reader is spawned off to buffer all communication returned from the Zaber
+device(s).
+.PP
+.B Close
+shuts down the
+.I reader
+associated with the Zaber port and closes the connection to free any resources
+used.
+.PP
+.B Getreply
+returns up to
+.I n
+Zaber Instructions from buffered data read.
+.PP
+.B Readreply
+returns an Instruction or times out in
+.I ms
+milliseconds.
+.PP
+.B Send
+takes a new command Instruction and writes it to the Port.
+
+.SH SEE ALSO
+http://www.zaber.com/wiki/Manuals
