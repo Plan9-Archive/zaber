@@ -1,6 +1,6 @@
 # Support for Zaber motorized linear stages
 #
-# Copyright (C) 2011, Corpus Callosum Corporation.  All Rights Reserverd.
+# Copyright (C) 2011, Corpus Callosum Corporation.  All Rights Reserved.
 
 Zaber : module
 {
