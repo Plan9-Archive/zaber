@@ -367,9 +367,7 @@ reader(p: ref Port, pidc: chan of int)
 			}
 			p.rdlock.release();
 		}
-		# error, try again
-		p.data = nil;
-		p.ctl = nil;
+		# error, attempt reconnect and try again
 		openport(p);
 	}
 }
