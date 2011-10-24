@@ -25,12 +25,14 @@
 		413571B712DCAD8600C07D1B /* zaber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.limbo; path = zaber.m; sourceTree = "<group>"; };
 		413571B812DCAD8600C07D1B /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = README.txt; path = ../README.txt; sourceTree = "<group>"; };
 		4189752112DCDF4800CE3154 /* zaber.b */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.limbo; path = zaber.b; sourceTree = "<group>"; };
+		41B6C9611455B8E8004F364F /* LICENSE.txt */ = {isa = PBXFileReference; lastKnownFileType = text; name = LICENSE.txt; path = ../LICENSE.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
 		4135718A12DCAC1F00C07D1B = {
 			isa = PBXGroup;
 			children = (
+				41B6C9611455B8E8004F364F /* LICENSE.txt */,
 				413571A112DCAD8500C07D1B /* appl */,
 				413571A912DCAD8600C07D1B /* lib */,
 				413571AB12DCAD8600C07D1B /* man */,
@@ -150,6 +152,9 @@
 /* Begin PBXProject section */
 		4135718C12DCAC1F00C07D1B /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+			};
 			buildConfigurationList = 4135718F12DCAC1F00C07D1B /* Build configuration list for PBXProject "zaber" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
